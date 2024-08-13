@@ -1,6 +1,7 @@
 package com.banca.digital;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.banca.digital.entities.Cliente;
 import com.banca.digital.entities.CuentaActual;
 import com.banca.digital.entities.CuentaAhorro;
+import com.banca.digital.entities.CuentaBancaria;
 import com.banca.digital.entities.OperacionCuenta;
 import com.banca.digital.enums.EstadoCuenta;
 import com.banca.digital.enums.TipoOperacion;
@@ -20,6 +22,7 @@ import com.banca.digital.repository.ClienteRepository;
 import com.banca.digital.repository.CuentaBancariaRepository;
 import com.banca.digital.repository.OperacionCuentaRepository;
 import com.banca.digital.servicios.BancoService;
+import com.banca.digital.servicios.CuentaBancariaService;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.banca.digital.repository")
@@ -30,7 +33,7 @@ public class BancaDigitalApplication {
 		SpringApplication.run(BancaDigitalApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	CommandLineRunner commandLineRunner(BancoService bancoService) {
 		return arg -> {
 			bancoService.cosultar();
@@ -39,18 +42,41 @@ public class BancaDigitalApplication {
 	
 	
 	//@Bean se comenta pq ya se usaran services ya no es necesario llamar ademas de que ya  tenemos info en la base de datos
-	CommandLineRunner start(ClienteRepository clienteR, CuentaBancariaRepository cuentaBancariaRepository, OperacionCuentaRepository operacionCuentaRepository) {
-		
+	//CommandLineRunner start(ClienteRepository clienteR, CuentaBancariaRepository cuentaBancariaRepository, OperacionCuentaRepository operacionCuentaRepository) {
+		@Bean
+		CommandLineRunner start(CuentaBancariaService cuentaBancariaService) {
 		return args ->{
 			
 			Stream.of("David","Angel","Karen").forEach(nombre -> {
 				Cliente cliente = new Cliente();
 				cliente.setNombre(nombre);
 				cliente.setEmail(nombre+"@gmail.com");
-				clienteR.save(cliente);
+				cuentaBancariaService.saveCliente(cliente);
+			});
+			
+				cuentaBancariaService.listCliente().forEach(cliente->{
+					try {
+							
+						cuentaBancariaService.saveCuentaBancariaActual(Math.random()*90000, 9000, cliente.getId());
+						cuentaBancariaService.saveCuentaBancariaAhorro(Math.random()*120000, 5.5, cliente.getId());
+						List<CuentaBancaria> cuentaBancarias = cuentaBancariaService.listCuentaBancarias();
+						
+						for(CuentaBancaria cuentaBancaria:cuentaBancarias) {
+							for(int i=0;i<10;i++) {
+								cuentaBancariaService.credit(cuentaBancaria.getId(), 10000+Math.random()*120000, "Credito");
+								cuentaBancariaService.debit(cuentaBancaria.getId(), 1000+Math.random()*90000, "Debito");
+										
+							}
+						}
+						
+					}
+					catch (Exception e) {
+						// TODO: handle exception
+					}
+			
 			});
 		
-			clienteR.findAll().forEach(cliente -> {
+			/*clienteR.findAll().forEach(cliente -> {
 				
 				CuentaActual cuentaActual = new CuentaActual();
 				cuentaActual.setId(UUID.randomUUID().toString());
@@ -83,7 +109,7 @@ public class BancaDigitalApplication {
 					operacionCuentaRepository.save(operacionCuenta);
 				}
 				
-			});
+			});*/
 			
 	  };
 	}
