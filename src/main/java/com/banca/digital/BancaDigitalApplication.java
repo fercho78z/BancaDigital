@@ -32,7 +32,7 @@ public class BancaDigitalApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BancaDigitalApplication.class, args);
 	}
-
+/*
 	//@Bean
 	CommandLineRunner commandLineRunner(BancoService bancoService) {
 		return arg -> {
@@ -43,7 +43,7 @@ public class BancaDigitalApplication {
 	
 	//@Bean se comenta pq ya se usaran services ya no es necesario llamar ademas de que ya  tenemos info en la base de datos
 	//CommandLineRunner start(ClienteRepository clienteR, CuentaBancariaRepository cuentaBancariaRepository, OperacionCuentaRepository operacionCuentaRepository) {
-		@Bean
+		//@Bean
 		CommandLineRunner start(CuentaBancariaService cuentaBancariaService) {
 		return args ->{
 			
@@ -110,9 +110,9 @@ public class BancaDigitalApplication {
 				}
 				
 			});*/
-			
+/*			
 	  };
-	}
+	}*/
 }
 
 

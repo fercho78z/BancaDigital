@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +36,8 @@ public class Cliente {
 	private String email;
 
 	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
-	private List<CuentaBancaria> cuentaBancaria = new ArrayList<>();
-
+	//private List<CuentaBancaria> cuentaBancaria = new ArrayList<>();
+	@JsonProperty(access=JsonProperty.Access.WRITE_ONLY) // solo se usara la lista cuando sea escritura sino tare muchos datos sobrecargando la pagina
+	private List<CuentaBancaria> cuentaBancaria;
 
 }

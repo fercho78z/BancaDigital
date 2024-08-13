@@ -37,6 +37,13 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService{
 	@Autowired
 	private OperacionCuentaRepository operacionCuentaR;
 
+	public CuentaBancariaServiceImpl(CuentaBancariaRepository cuentaBancariaR) {
+        super();
+        System.out.println("Cuenta Bancaria Repo:= "+this.cuentaBancariaR);
+        this.cuentaBancariaR = cuentaBancariaR;
+    }
+
+	
 	@Override
 	public Cliente saveCliente(Cliente cliente) {
 		log.info("Guradando un nuevo cliente");
