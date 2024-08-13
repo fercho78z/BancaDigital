@@ -7,9 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@DiscriminatorValue("SA") // no se crea la entidad sino una columna que se llama cuenta de ahorro "SA" en ingles y hereda atributos de cuenta bancaria
 @Entity
 @Data
-@DiscriminatorValue("SA") // no se crea la entidad sino una columna que se llama cuenta de ahorro "SA" en ingles y hereda atributos de cuenta bancaria
 @NoArgsConstructor
 @AllArgsConstructor
 

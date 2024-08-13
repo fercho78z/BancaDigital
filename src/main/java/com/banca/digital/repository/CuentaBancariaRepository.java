@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.banca.digital.entities.CuentaBancaria;
 
 @Repository
-public interface CuentaBancariaRepository extends JpaRepository<CuentaBancaria, Long>{
+public interface CuentaBancariaRepository extends JpaRepository<CuentaBancaria, String>{
 
 }

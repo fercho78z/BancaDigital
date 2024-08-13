@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@DiscriminatorValue("CA") //sobregiro cuenta actual
 @Entity
 @Data
-@DiscriminatorValue("CA") //sobregiro cuenta actual
 @NoArgsConstructor
 @AllArgsConstructor
 public class CuentaActual extends CuentaBancaria {

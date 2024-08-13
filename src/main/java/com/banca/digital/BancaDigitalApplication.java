@@ -19,6 +19,7 @@ import com.banca.digital.enums.TipoOperacion;
 import com.banca.digital.repository.ClienteRepository;
 import com.banca.digital.repository.CuentaBancariaRepository;
 import com.banca.digital.repository.OperacionCuentaRepository;
+import com.banca.digital.servicios.BancoService;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.banca.digital.repository")
@@ -29,8 +30,15 @@ public class BancaDigitalApplication {
 		SpringApplication.run(BancaDigitalApplication.class, args);
 	}
 
-	
 	@Bean
+	CommandLineRunner commandLineRunner(BancoService bancoService) {
+		return arg -> {
+			bancoService.cosultar();
+		};
+	}
+	
+	
+	//@Bean se comenta pq ya se usaran services ya no es necesario llamar ademas de que ya  tenemos info en la base de datos
 	CommandLineRunner start(ClienteRepository clienteR, CuentaBancariaRepository cuentaBancariaRepository, OperacionCuentaRepository operacionCuentaRepository) {
 		
 		return args ->{

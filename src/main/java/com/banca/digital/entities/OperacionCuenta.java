@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 public class OperacionCuenta {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long Id;
 	private Date fecheOperacion;
 	private double monto;
@@ -41,6 +41,6 @@ public class OperacionCuenta {
 	private TipoOperacion tipoOperacion;
 	@ManyToOne 
 	private CuentaBancaria cuentaBancaria;
-
+	private String descripcion;
 
 }
