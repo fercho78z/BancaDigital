@@ -3,10 +3,13 @@ package com.banca.digital.servicios.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.banca.digital.dto.ClienteDTO;
 import com.banca.digital.entities.Cliente;
 import com.banca.digital.entities.CuentaActual;
 import com.banca.digital.entities.CuentaAhorro;
@@ -16,10 +19,12 @@ import com.banca.digital.enums.TipoOperacion;
 import com.banca.digital.exception.BalanceInsuficienteException;
 import com.banca.digital.exception.ClienteNotFoundException;
 import com.banca.digital.exception.CuentaBancariaNotFoundException;
+import com.banca.digital.mappers.CuentaBancariaMapperImpl;
 import com.banca.digital.repository.ClienteRepository;
 import com.banca.digital.repository.CuentaBancariaRepository;
 import com.banca.digital.repository.OperacionCuentaRepository;
 import com.banca.digital.servicios.CuentaBancariaService;
+import com.banca.digital.mappers.CuentaBancariaMapperImpl;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +42,9 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService{
 	@Autowired
 	private OperacionCuentaRepository operacionCuentaR;
 
+	@Autowired
+	private CuentaBancariaMapperImpl cuentaBancariaMapperImpl; 
+	
 	public CuentaBancariaServiceImpl(CuentaBancariaRepository cuentaBancariaR) {
         super();
         System.out.println("Cuenta Bancaria Repo:= "+this.cuentaBancariaR);
@@ -86,9 +94,10 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService{
 	}
 
 	@Override
-	public List<Cliente> listCliente() {
-		// TODO Auto-generated method stub
-		return clienteR.findAll();
+	public List<ClienteDTO> listCliente() {
+		List<Cliente> clientes = clienteR.findAll();
+		List<ClienteDTO> clienteDTOs = clientes.stream().map(cliente -> cuentaBancariaMapperImpl.mapperDeCliente(cliente)).collect(Collectors.toList());
+		return clienteDTOs;
 	}
 
 	@Override

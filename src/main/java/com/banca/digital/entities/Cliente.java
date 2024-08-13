@@ -37,7 +37,7 @@ public class Cliente {
 
 	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
 	//private List<CuentaBancaria> cuentaBancaria = new ArrayList<>();
-	@JsonProperty(access=JsonProperty.Access.WRITE_ONLY) // solo se usara la lista cuando sea escritura sino tare muchos datos sobrecargando la pagina
+	//@JsonProperty(access=JsonProperty.Access.WRITE_ONLY) // solo se usara la lista cuando sea escritura sino tare muchos datos sobrecargando la pagina
 	private List<CuentaBancaria> cuentaBancaria;
 
 }

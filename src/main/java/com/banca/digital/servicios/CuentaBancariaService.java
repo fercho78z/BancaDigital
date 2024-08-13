@@ -1,5 +1,6 @@
 package com.banca.digital.servicios;
 
+import com.banca.digital.dto.ClienteDTO;
 import com.banca.digital.entities.Cliente;
 import com.banca.digital.entities.CuentaActual;
 import com.banca.digital.entities.CuentaAhorro;
@@ -15,7 +16,7 @@ public interface CuentaBancariaService {
 	Cliente saveCliente(Cliente cliente);
 	CuentaActual saveCuentaBancariaActual(double balanceInicial, double sobregiro, Long clienteId) throws ClienteNotFoundException;
 	CuentaAhorro saveCuentaBancariaAhorro(double balanceInicial,double tasaInteres, Long clienteId) throws ClienteNotFoundException;
-	List<Cliente> listCliente();
+	List<ClienteDTO> listCliente();
 	CuentaBancaria getCuentaBancaria(String cuentaId) throws CuentaBancariaNotFoundException;
 	void debit(String cuentaId,double monto,String descripcion) throws CuentaBancariaNotFoundException,BalanceInsuficienteException;
 	void credit(String cuentaId, double monto,String descrpcion) throws CuentaBancariaNotFoundException;
