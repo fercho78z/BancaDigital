@@ -35,7 +35,7 @@ public class OperacionCuenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long Id;
-	private Date fecheOperacion;
+	private Date fechaOperacion;
 	private double monto;
 	@Enumerated(EnumType.STRING)
 	private TipoOperacion tipoOperacion;

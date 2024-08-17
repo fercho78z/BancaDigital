@@ -11,6 +11,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.banca.digital.dto.ClienteDTO;
+import com.banca.digital.dto.CuentaActualDTO;
+import com.banca.digital.dto.CuentaAhorroDTO;
+import com.banca.digital.dto.CuentaBancariaDTO;
 import com.banca.digital.entities.Cliente;
 import com.banca.digital.entities.CuentaActual;
 import com.banca.digital.entities.CuentaAhorro;
@@ -25,8 +29,8 @@ import com.banca.digital.servicios.BancoService;
 import com.banca.digital.servicios.CuentaBancariaService;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.banca.digital.repository")
-@EntityScan("com.banca.digital.entities")
+//@EnableJpaRepositories("com.banca.digital.repository")
+//@EntityScan("com.banca.digital.entities")
 public class BancaDigitalApplication {
 
 	public static void main(String[] args) {
@@ -113,6 +117,89 @@ public class BancaDigitalApplication {
 /*			
 	  };
 	}*/
+	
+	
+	//Este metodo es para crear datos apratir de las clases DTO
+	//@Bean
+			CommandLineRunner start(CuentaBancariaService cuentaBancariaService) {
+			return args ->{
+				
+				Stream.of("David","Angel","Karen","Pedro","Roberto","Denisse").forEach(nombre -> {
+					ClienteDTO cliente = new ClienteDTO();
+					cliente.setNombre(nombre);
+					cliente.setEmail(nombre+"@gmail.com");
+					cuentaBancariaService.saveClienteDTO(cliente);
+				});
+				
+					cuentaBancariaService.listCliente().forEach(cliente->{
+						try {
+								
+							cuentaBancariaService.saveCuentaBancariaActual(Math.random()*90000, 9000, cliente.getId());
+							cuentaBancariaService.saveCuentaBancariaAhorro(Math.random()*120000, 5.5, cliente.getId());
+							List<CuentaBancariaDTO> cuentaBancarias = cuentaBancariaService.listCuentaBancariasDTO();
+							
+							for(CuentaBancariaDTO cuentaBancaria:cuentaBancarias) {
+								for(int i=0;i<10;i++) {
+									String cuentaId;
+									if(cuentaBancaria instanceof CuentaAhorroDTO) {
+										cuentaId = ((CuentaAhorroDTO)cuentaBancaria).getId();
+									}else {
+										cuentaId = ((CuentaActualDTO)cuentaBancaria).getId();
+									}
+										
+									cuentaBancariaService.credit(cuentaId, 10000+Math.random()*120000, "Credito");
+									cuentaBancariaService.debit(cuentaId, 1000+Math.random()*90000, "Debito");
+											
+								}
+							}
+							
+						}
+						catch (Exception e) {
+							// TODO: handle exception
+						}
+				
+				});
+			
+				/*clienteR.findAll().forEach(cliente -> {
+					
+					CuentaActual cuentaActual = new CuentaActual();
+					cuentaActual.setId(UUID.randomUUID().toString());
+					cuentaActual.setBalance(Math.random()*90000);
+					cuentaActual.setFechaCreacion(new Date());
+					cuentaActual.setCliente(cliente);
+					cuentaActual.setSobregiro(9000);
+					cuentaBancariaRepository.save(cuentaActual);
+					
+					CuentaAhorro cuentaAhorro = new CuentaAhorro();
+					cuentaAhorro.setId(UUID.randomUUID().toString());
+					cuentaAhorro.setBalance(Math.random()*90000);
+					cuentaAhorro.setEstadoCuenta(EstadoCuenta.CREADA);
+					cuentaAhorro.setCliente(cliente);
+					cuentaAhorro.setTasaDeInteres(5.5);
+					cuentaBancariaRepository.save(cuentaAhorro);
+					
+					
+				});
+				
+				cuentaBancariaRepository.findAll().forEach(cuentaBancaria -> {
+					
+					for(int i=0; i<10;i++) {
+						
+						OperacionCuenta operacionCuenta =  new OperacionCuenta();
+						operacionCuenta.setFecheOperacion(new Date());
+						operacionCuenta.setMonto(Math.random()*12000);
+						operacionCuenta.setTipoOperacion(Math.random()>05? TipoOperacion.DEBITO:TipoOperacion.CREDITO);
+						operacionCuenta.setCuentaBancaria(cuentaBancaria);
+						operacionCuentaRepository.save(operacionCuenta);
+					}
+					
+				});*/
+				
+		  };
+		}
+	
+	
+	
 }
 
 

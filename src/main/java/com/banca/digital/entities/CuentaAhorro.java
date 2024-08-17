@@ -1,5 +1,6 @@
 package com.banca.digital.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class CuentaAhorro extends CuentaBancaria{
-	
+	@Column(insertable=false, updatable=false)
+	private String tipo;
 	private double tasaDeInteres;
 }

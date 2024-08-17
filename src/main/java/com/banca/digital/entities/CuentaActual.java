@@ -1,5 +1,6 @@
 package com.banca.digital.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -13,4 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CuentaActual extends CuentaBancaria {
 	private double sobregiro;
+	@Column(insertable=false, updatable=false)
+	private String tipo;
 }

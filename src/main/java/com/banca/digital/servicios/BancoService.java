@@ -32,7 +32,7 @@ public void cosultar() {
 			System.out.println("sobregiro: " + ((CuentaActual)cuentaBancariaBBDD).getSobregiro());
 		}
 		else if(cuentaBancariaBBDD instanceof CuentaAhorro) {
-			System.out.println("Tasa de insteres: " + ((CuentaAhorro)cuentaBancariaBBDD).getTasaDeInteres());
+			System.out.println("Tasa de interes: " + ((CuentaAhorro)cuentaBancariaBBDD).getTasaDeInteres());
 				
 		}
 		
@@ -40,7 +40,7 @@ public void cosultar() {
 			
 			System.out.println("------------------");
 			System.out.println("Tipo de operacion: " + operacionCuenta.getTipoOperacion());
-			System.out.println("Fecha de creacion: " + operacionCuenta.getFecheOperacion());
+			System.out.println("Fecha de creacion: " + operacionCuenta.getFechaOperacion());
 			System.out.println("Monto: " + operacionCuenta.getMonto());
 			
 		});
